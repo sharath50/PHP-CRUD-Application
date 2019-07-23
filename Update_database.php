@@ -16,7 +16,7 @@
 
 
 <?php 
-
+	$id = '';
 	$id = intval(@$_GET['id']);
 
 	$nameError = '';
@@ -25,6 +25,7 @@
 	$roleError = '';
 	$salaryError = '';
 	$addressError = '';
+	$empidError = '';
 
 	$empName = '';
 	$empAge = '';
@@ -32,6 +33,7 @@
 	$empRole = '';
 	$empSalary = '';
 	$empAddress = '';
+	$empId = '';
 
 ?>
 
@@ -68,12 +70,18 @@
 		} else {
 			$empAddress = check_input($_POST['address']);
 		}
+		if (empty($_POST['records'])) {
+			$empidError = 'id required';
+		} else {
+			$empId = $_POST['records'];
+		}
 
 	}
 
 	function updated_data() {
-			global $empName , $empAge , $empGender , $empRole , $empSalary , $empAddress;
-			echo "<ul class='list-unstyled'> <li> Name : " . $empName . "</li>";
+			global $empName , $empAge , $empGender , $empRole , $empSalary , $empAddress , $empId;
+			echo "<ul class='list-unstyled'> <li> Name : " . $empId . "</li>";
+			echo "<li> Name : " . $empName . "</li>";
 			echo "<li> Email : " . $empAge . "</li>";
 			echo "<li> Website : " . $empGender . "</li>";
 			echo "<li> Gender : " . $empRole . "</li>";
@@ -88,13 +96,15 @@
 	}
 
 	function update_into_database() {
-		global $empName , $empAge , $empGender , $empRole , $empSalary , $empAddress , $connection , $id;
+		global $empName , $empAge , $empGender , $empRole , $empSalary , $empAddress , $connection , $id , $empId;
+
+		$id = $id == ''? $empId:$id;
 
 		$insert_query = "UPDATE employee_record SET emp_name = '{$empName}' , emp_age = '{$empAge}' , emp_role = '{$empRole}' , salary = '{$empSalary}' , home_address = '{$empAddress}' , sex = '{$empGender}' WHERE id = '{$id}';";
 		$insert = $connection->query($insert_query);
 
 			if ($insert) {
-				echo 'ok, data updated successfully';
+				echo 'ok, data updated successfully on id '. $id;
 			} else {
 				echo 'No, data not undated';
 				echo "error : " . $insert->error;
@@ -109,7 +119,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-8">
-				<form class="form-group" action="" method="POST">
+				<form class="form-group" id="update_form" action="" method="POST">
 					<div class="form-group">
 						<label class="lead" for="name">Empoyee Name : <span class="text-dark font-weight-lighter"><?php echo $nameError; ?></span></label>
 						<input class="form-control form-control-sm" id="name" type="text" name="empname">
@@ -153,7 +163,31 @@
 				</form>
 
 			</div>
-			<div class="col-4 bg-white text-dark card">
+			<div class="col-1 bg-white text-dark card pt-4">
+				<?php
+				function read_id() {
+						global $connection;
+
+						$read_query = "SELECT id FROM employee_record;";
+						$read = $connection->query($read_query);
+						$data = '';
+						if ($read->num_rows > 0) {
+							while($row = $read->fetch_assoc()) {
+								$id = $row['id'];
+								$data .= "<option value='{$id}'>{$id}</option>";
+							}
+						}
+						return $data;
+					}
+				?>
+				<label for="id" class="lead">Id : </label>
+				<select id="id" name="records" class="form-control" form="update_form">
+					<?php
+						echo read_id();
+					?>
+				</select>
+			</div>
+			<div class="col-3 bg-white text-dark card">
 				<h1 class="h1 text-primary text-center">Employees Create</h1>
 
 				<?php

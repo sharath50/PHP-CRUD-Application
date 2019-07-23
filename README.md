@@ -16,7 +16,8 @@ CREATE TABLE `employee_record` (
 
 
 In delete page -> multiselect delete is currently not working....
-And to update the data should go from read page
+
+ok we can do update in both direct page or from read...
 
 I will fix them soon 
 
