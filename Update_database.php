@@ -79,8 +79,8 @@
 	}
 
 	function updated_data() {
-			global $empName , $empAge , $empGender , $empRole , $empSalary , $empAddress , $empId;
-			echo "<ul class='list-unstyled'> <li> Name : " . $empId . "</li>";
+			global $empName , $empAge , $empGender , $empRole , $empSalary , $empAddress , $empId , $id;
+			echo "<ul class='list-unstyled'> <li> id : " . $id . "</li>";
 			echo "<li> Name : " . $empName . "</li>";
 			echo "<li> Email : " . $empAge . "</li>";
 			echo "<li> Website : " . $empGender . "</li>";
@@ -193,8 +193,8 @@
 				<?php
 						if (empty($nameError) && empty($ageError) && empty($genderError) && empty($roleError) && empty($salaryError) && empty($addressError)) {
 							if (!empty($empName) && !empty($empAge) && !empty($empGender) && !empty($empRole) && !empty($empSalary) && !empty($empAddress)) {
-								updated_data();
 								update_into_database();
+								updated_data();
 							} 
 						}
 					
