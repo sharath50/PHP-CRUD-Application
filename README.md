@@ -15,4 +15,9 @@ CREATE TABLE `employee_record` (
 ) AUTO_INCREMENT=100;
 
 
-in project multiselect delete is currently not working....
+In delete page -> multiselect delete is currently not working....
+And to update the data should go from read page
+
+I will fix them soon 
+
+thank you...
