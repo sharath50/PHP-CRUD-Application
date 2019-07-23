@@ -1,0 +1,18 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.content {
+	padding-top: 20px;
+	height:100%;
+	background: linear-gradient(to bottom left , seagreen , white);
+}
+
+.form-group button , .form-group a {
+	width: 175px;
+}
+
+.sec {
+
+}
